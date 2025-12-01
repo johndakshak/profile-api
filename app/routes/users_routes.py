@@ -106,5 +106,24 @@ async def upload_dp(current_user: User = Depends(authMiddleware), db: Session = 
 
     return user_exist
 
+@router.patch('/', status_code=status.HTTP_200_OK, response_model=UserUpdate)
+def update_user(user_name: UserUpdate, current_user: User = Depends(authMiddleware), db: Session = Depends(get_db)):
+
+    name = db.query(User).filter(User.name == current_user.name).first()
+
+    if not name:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"User not found!"
+        )
+    
+    for field, value in user_name.dict(exclude_unset=True).items():
+        setattr(name, field, value)
+
+    db.commit()
+    db.refresh(name)
+    return name
+    
+
 
 
