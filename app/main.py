@@ -7,8 +7,6 @@ from .routes import users_routes
 from app.routes import auth_route
 from fastapi.staticfiles import StaticFiles
 
-
-
 logger = logging.getLogger(__name__)
 
 Base.metadata.create_all(bind=engine)

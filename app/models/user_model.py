@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Enum, func
 from app.models.base import Base
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from app.enums import UserRole
 
 class User(Base):
     __tablename__ = 'users'
@@ -11,6 +12,7 @@ class User(Base):
     email = Column(String(100), unique=True, nullable=False, index=True)
     password = Column(String(100), nullable=False) 
     img_url = Column(String(255), nullable=True)
+    role = Column(Enum(UserRole), nullable=False, default=UserRole.USER.value, server_default="user")
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(),nullable=False)
     

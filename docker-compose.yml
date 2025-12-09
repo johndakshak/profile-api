@@ -16,7 +16,7 @@ services:
       - JWT_ALGORITHM=${JWT_ALGORITHM}
       - JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}
     volumes:
-      - ./app:/app/app
+      - .:/app
       - ./app/static/uploads:/app/app/static/uploads
     depends_on:
       profile_db:
